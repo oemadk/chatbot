@@ -70,10 +70,8 @@ app.post("/webhook", function(req, res) {
     AutojoinRoomsMixin.setupOnClient(client2);
     client2.sendMessage("!mxmSbSapJxYEXVMPgS:yashfiichat.eastus.cloudapp.azure.com", {
         "msgtype": "m.notice",
-        "body": "it's working! i got called by a weebhook to send this message!",
-    })
-
-    res.send("HTTP POST request sent to the webhook URL!")
+        "body": "doctor has requested you to make" + " " + req.body.long_name + " " + "test"
+    });
 })
 
 app.listen(PORT, () => {
