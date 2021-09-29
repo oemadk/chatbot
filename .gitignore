@@ -1,6 +1,4 @@
-config/*
 !config/default.yaml
-lib/
 storage/
 
 /.idea
