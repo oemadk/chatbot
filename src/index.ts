@@ -27,33 +27,32 @@ LogService.setLevel(LogLevel.DEBUG);
 LogService.info("index", "Bot starting...");
 
 
-//This is the startup closure where we give ourselves an async context
-// (async function () {
-//     // Prepare the storage system for the bot
-//     const storage = new SimpleFsStorageProvider(path.join(config.dataPath, "bot.json"));
-//
-//     // Create the client
-//     let client: MatrixClient;
-//     if (config.pantalaimon.use) { // create a client with Pantalaimon if pantalaimon.use set to true.
-//         const pantalaimon = new PantalaimonClient(config.homeserverUrl, storage);
-//         client = await pantalaimon.createClientWithCredentials(config.pantalaimon.username, config.pantalaimon.password);
-//     } else { // else use Matrix client.
-//         client = new MatrixClient(config.homeserverUrl, config.accessToken, storage);
-//     }
-//
-//     // Setup the autojoin mixin (if enabled)
-//     if (config.autoJoin) {
-//         AutojoinRoomsMixin.setupOnClient(client);
-//     }
-//
-//     // Prepare the command handler
-//     const commands = new CommandHandler(client);
-//
-//
-//     await commands.start();
-//     LogService.info("index", "Starting sync...");
-//     await client.start(); // This blocks until the bot is killed
-// })();
+(async function () {
+    // Prepare the storage system for the bot
+    const storage = new SimpleFsStorageProvider(path.join(config.dataPath, "bot.json"));
+
+    // Create the client
+    let client: MatrixClient;
+    if (config.pantalaimon.use) { // create a client with Pantalaimon if pantalaimon.use set to true.
+        const pantalaimon = new PantalaimonClient(config.homeserverUrl, storage);
+        client = await pantalaimon.createClientWithCredentials(config.pantalaimon.username, config.pantalaimon.password);
+    } else { // else use Matrix client.
+        client = new MatrixClient(config.homeserverUrl, config.accessToken, storage);
+    }
+
+    // Setup the autojoin mixin (if enabled)
+    if (config.autoJoin) {
+        AutojoinRoomsMixin.setupOnClient(client);
+    }
+
+    // Prepare the command handler
+    const commands = new CommandHandler(client);
+
+
+    await commands.start();
+    LogService.info("index", "Starting sync...");
+    await client.start(); // This blocks until the bot is killed
+})();
 
 app.use(express.json())
 app.use(express.urlencoded({
@@ -72,6 +71,20 @@ app.post("/webhook", function(req, res) {
         "msgtype": "m.notice",
         "body": "doctor has requested you to make" + " " + req.body.long_name + " " + "test"
     });
+})
+
+app.post("/invite", function(req, res) {
+    console.log(req.body);
+    const client2 = new MatrixClient("https://yashfiichat.eastus.cloudapp.azure.com", "syt_ZHJib3Q_WbpKtNthdHDXZyWlnYwC_2G0ZcG");
+    AutojoinRoomsMixin.setupOnClient(client2);
+    setTimeout(function(){
+        client2.sendMessage(req.body.roomId, {
+            "msgtype": "m.notice",
+            "body": "A new RFA has been recieved" + ' ' + req.body.link
+        })
+    }, 10000);
+
+
 })
 
 app.listen(PORT, () => {
