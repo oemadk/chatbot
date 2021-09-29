@@ -1,15 +1,15 @@
 import * as config from "config";
 
 interface IConfig {
-    homeserverUrl: string;
+    homeserverUrl: "https://yashfiichat.eastus.cloudapp.azure.com";
     pantalaimon: {
-        use: boolean;
-        username: string;
-        password: string;
+        use: false;
+        username: 'drbot';
+        password: '12345678';
     };
-    accessToken: string;
-    autoJoin: boolean;
-    dataPath: string;
+    accessToken: "syt_ZHJib3Q_WbpKtNthdHDXZyWlnYwC_2G0ZcG";
+    autoJoin: true;
+    dataPath: "storage";
 }
 
 export default <IConfig>config;

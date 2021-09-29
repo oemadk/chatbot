@@ -77,7 +77,8 @@ app.post("/invite", function(req, res) {
     console.log(req.body);
     const client2 = new MatrixClient("https://yashfiichat.eastus.cloudapp.azure.com", "syt_ZHJib3Q_WbpKtNthdHDXZyWlnYwC_2G0ZcG");
     AutojoinRoomsMixin.setupOnClient(client2);
-    setTimeout(function(){
+    setTimeout(function() {
+        console.log('in function');
         client2.sendMessage(req.body.roomId, {
             "msgtype": "m.notice",
             "body": "A new RFA has been recieved" + ' ' + req.body.link
@@ -86,7 +87,6 @@ app.post("/invite", function(req, res) {
 
 
 })
-
 app.listen(PORT, () => {
     console.log(`Example app listening at http://localhost:${PORT}`)
 })

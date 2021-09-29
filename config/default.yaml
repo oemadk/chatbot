@@ -15,4 +15,4 @@ accessToken: "syt_ZHJib3Q_WbpKtNthdHDXZyWlnYwC_2G0ZcG"
 autoJoin: true
 
 # Location on disk for where to store various bot information.
-dataPath: "storage"
+dataPath: "storage/"
